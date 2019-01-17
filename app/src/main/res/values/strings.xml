@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TakaharaTest</string>
     <string name="action_settings">Settings</string>
+    <string name="please_input_here">ここに文字を入力してください</string>
+    <string name="display_below">以下に入力された文字が表示されます</string>
+    <string name="input_message_button">入力</string>
 </resources>
