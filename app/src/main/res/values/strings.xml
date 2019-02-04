@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">TakaharaTest</string>
-    <string name="action_settings">Settings</string>
+    <!-- オプションメニュー -->
+    <string name="action_delete_all">全て消去</string>
+    <!-- 削除ダイアログ -->
+    <string name="dialog_delete_all_title">確認</string>
+    <string name="dialog_delete_all_text">メッセージを全て消去しますか？</string>
+    <string name="dialog_delete_all_ok">消去する</string>
+    <string name="dialog_delete_all_cancel">キャンセル</string>
+    <string name="toast_delete_all">消去しました</string>
+    <!-- メッセージ入力画面 -->
     <string name="please_input_here">ここに文字を入力してください</string>
-    <string name="display_below">以下に入力された文字が表示されます</string>
     <string name="input_message_button">入力</string>
+    <!-- メッセージ一覧画面-->
+    <string name="display_below">以下に入力された文字が表示されます</string>
+    <!-- プリファレンス-->
+    <string name="prefer_message_list_file_name">MessageList</string>
+    <string name="prefer_message_key_name">message</string>
+    <string name="prefer_message_key_next_id">next_id</string>
+
 </resources>
