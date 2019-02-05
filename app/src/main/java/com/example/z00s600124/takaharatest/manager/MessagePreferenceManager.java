@@ -23,12 +23,16 @@ public class MessagePreferenceManager {
     private String messageNextIdKey;
     private SharedPreferences messagePrefer;
 
-    public MessagePreferenceManager(Application targetApp) {
+    /*
+        コンストラクタ.
+         @param activeApplication 実行元となるアプリケーションクラス.通常はgetApplication()を用いる
+     */
+    public MessagePreferenceManager(Application activeApplication) {
 
-        fileName = targetApp.getResources().getString(R.string.prefer_message_list_file_name);
-        messageBaseKey = targetApp.getResources().getString(R.string.prefer_message_key_name);
-        messageNextIdKey = targetApp.getResources().getString(R.string.prefer_message_key_next_id);
-        messagePrefer = targetApp.getSharedPreferences(fileName, Application.MODE_PRIVATE);
+        fileName = activeApplication.getResources().getString(R.string.prefer_message_list_file_name);
+        messageBaseKey = activeApplication.getResources().getString(R.string.prefer_message_key_name);
+        messageNextIdKey = activeApplication.getResources().getString(R.string.prefer_message_key_next_id);
+        messagePrefer = activeApplication.getSharedPreferences(fileName, Application.MODE_PRIVATE);
     }
 
     /*

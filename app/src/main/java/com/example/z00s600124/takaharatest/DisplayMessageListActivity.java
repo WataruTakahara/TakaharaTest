@@ -190,7 +190,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         //textView.setTextSize(getResources().getDimension( R.dimen.textSize_list ));//これだと文字が大きくなる（ユーザ設定が反映されるため）
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.textSize_list));
         textView.setBackground(getDrawable(R.drawable.message_frame_style));
-        //マージン、パディングを設定
+        
+        //マージン、パディングを設定.今後values/stylesで再設定予定
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(params.leftMargin + 5, 10, params.rightMargin + 5, 10);
         textView.setLayoutParams(params);
