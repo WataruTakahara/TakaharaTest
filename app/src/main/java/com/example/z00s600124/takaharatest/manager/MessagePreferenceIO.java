@@ -1,6 +1,7 @@
 package com.example.z00s600124.takaharatest.manager;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.z00s600124.takaharatest.R;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
     <string name="message1">いいい</string>
 
  */
-public class MessagePreferenceManager {
+public class MessagePreferenceIO {
     private String fileName;
     private String messageBaseKey;
     private String messageNextIdKey;
@@ -27,7 +28,7 @@ public class MessagePreferenceManager {
         初期化にアクティブなApplicationのContextからプリファレンスの操作に必要な情報を取得する.
          @param activeContext 実行元となるContextクラス.通常はgetApplicationContext()を用いる
      */
-    public MessagePreferenceManager(Application activeApplication) {
+    public MessagePreferenceIO(Context activeContext) {
 
         fileName = activeApplication.getResources().getString(R.string.prefer_message_list_file_name);
         messageBaseKey = activeApplication.getResources().getString(R.string.prefer_message_key_name);
