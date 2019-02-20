@@ -18,14 +18,13 @@ import android.widget.Toast;
 
 import com.example.z00s600124.takaharatest.defines.IntentExtraKeys;
 import com.example.z00s600124.takaharatest.defines.RequestCode;
-import com.example.z00s600124.takaharatest.manager.MessagePreferenceManager;
+import com.example.z00s600124.takaharatest.manager.MessagePreferenceIO;
 
 import java.util.ArrayList;
 
-/*
-ユーザが入力した文字列を一覧で表示するためのアクティビティ.
-起動時にこの画面が最初に呼び出される.
-
+/**
+ * ユーザが入力した文字列を一覧で表示するためのアクティビティ.
+ * 起動時にこの画面が最初に呼び出される.
  */
 public class DisplayMessageListActivity extends AppCompatActivity {
     public static final String KEY_INPUT_VALUE = IntentExtraKeys.INPUT_VALUE.getKeyName();
@@ -56,8 +55,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
 
     }
 
-    /*
-    プリファレンスに保存されたメッセージを元に画面に反映させる
+    /**
+     * プリファレンスに保存されたメッセージを元に画面に反映させる
      */
     private void initMessageForPreference() {
 
@@ -72,8 +71,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         }
     }
 
-    /*
-        アクションバーを表示する
+    /**
+     * アクションバーを表示する
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,8 +80,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         return true;
     }
 
-    /*
-        オプションメニューのアイテムの押下時に実行
+    /**
+     * オプションメニューのアイテムの押下時に実行
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,8 +96,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    消去してよいかのダイアログを表示.
+    /**
+     * 消去してよいかのダイアログを表示.
      */
     private void confirmDeleteAllMessageList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(DisplayMessageListActivity.this);
@@ -119,9 +118,9 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    /*
-    全て消去ダイアログで「はい」が選ばれた.
-    画面およびプレファレンスからメッセージを削除し、トーストを表示
+    /**
+     * 全て消去ダイアログで「はい」が選ばれた.
+     * 画面およびプレファレンスからメッセージを削除し、トーストを表示
      */
     private void deleteAllMessageListDialogSelectedOk() {
         deleteAllMessageListFromLayout();
@@ -132,17 +131,17 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         toast.show();
     }
 
-    /*
-    ユーザが入力した文字列の一覧を全て消去する
-    注意：プレファレンスの内容は変更されない
+    /**
+     * ユーザが入力した文字列の一覧を全て消去する
+     * 注意：プレファレンスの内容は変更されない
      */
     private void deleteAllMessageListFromLayout() {
         listLayout.removeAllViews();
     }
 
-    /*
-     画面遷移の通知を受け取る
-    */
+    /**
+     * 画面遷移の通知を受け取る
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == requestCodeFromInputActivity) {
@@ -153,23 +152,16 @@ public class DisplayMessageListActivity extends AppCompatActivity {
 
     }
 
-    /*
-    入力画面へ遷移する
- */
+
+    /**
+     * 入力画面へ遷移する
+     */
     private void startInputActivity() {
         Intent intent = new Intent(DisplayMessageListActivity.this, InputActivity.class);
         int requestCode = requestCodeFromInputActivity;
         startActivityForResult(intent, requestCode);
     }
 
-    /*
-     入力画面からの返しの結果を受け取る
-    */
-    protected void textActivityResult(int requestCode, int resultCode, Intent intent) {
-        //結果がnullであれば何もしない
-        if (null == intent) {
-            return;
-        }
 
         //入力画面で正常に「入力」ボタンが押された
         if (resultCode == RESULT_OK) {
@@ -190,7 +182,7 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         //textView.setTextSize(getResources().getDimension( R.dimen.textSize_list ));//これだと文字が大きくなる（ユーザ設定が反映されるため）
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.textSize_list));
         textView.setBackground(getDrawable(R.drawable.message_frame_style));
-        
+
         //マージン、パディングを設定.今後values/stylesで再設定予定
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(params.leftMargin + 5, 10, params.rightMargin + 5, 10);

@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.example.z00s600124.takaharatest.manager.MessagePreferenceManager;
 
-/*
+/**
 ユーザがテキストボックスに文字を入力し、ボタンの押下でDisplayMessageListActivityに値を送信する.
  */
 public class InputActivity extends AppCompatActivity {
@@ -50,6 +50,7 @@ public class InputActivity extends AppCompatActivity {
     /*
     勉強用にすべてのアクティビティライフライクルの各要素でログを出力する
      */
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -7,7 +7,7 @@ import com.example.z00s600124.takaharatest.R;
 
 import java.util.ArrayList;
 
-/*
+/**
 メッセージをプリファレンスに保存・読み込み・削除することを管理するクラス
 
     messageBaseKeyとmessageNextIdKeyを組み合わせ、複数のメッセージをプリファレンスで管理する。
@@ -23,9 +23,9 @@ public class MessagePreferenceManager {
     private String messageNextIdKey;
     private SharedPreferences messagePrefer;
 
-    /*
-        コンストラクタ.
-         @param activeApplication 実行元となるアプリケーションクラス.通常はgetApplication()を用いる
+    /**
+        初期化にアクティブなApplicationのContextからプリファレンスの操作に必要な情報を取得する.
+         @param activeContext 実行元となるContextクラス.通常はgetApplicationContext()を用いる
      */
     public MessagePreferenceManager(Application activeApplication) {
 
@@ -35,7 +35,7 @@ public class MessagePreferenceManager {
         messagePrefer = activeApplication.getSharedPreferences(fileName, Application.MODE_PRIVATE);
     }
 
-    /*
+    /**
    引数で渡された文字列をプリファレンスに追記する
     */
     public void addMessage(String message) {
@@ -51,7 +51,7 @@ public class MessagePreferenceManager {
         messageEditor.apply();
     }
 
-    /*
+    /**
     全メッセージを取得.
     配列には古いものから順に挿入されている.
      */
@@ -70,7 +70,7 @@ public class MessagePreferenceManager {
         return allMessages;
     }
 
-    /*
+    /**
     全メッセージを消去.
     各メッセージおよび要素数の項目を削除する
 
@@ -89,14 +89,14 @@ public class MessagePreferenceManager {
 
     }
 
-    /*
+    /**
     メッセージの要素数を指定して、特定のメッセージのキーを取得する
      */
     private String makeMessageKey(int inputNum) {
         return messageBaseKey + inputNum;
     }
 
-    /*
+    /**
     メッセージの要素数を指定して、特定のメッセージの内容を取得する.
     存在しない場合はnullが返却される
     */
@@ -105,7 +105,7 @@ public class MessagePreferenceManager {
         return messagePrefer.getString(oneMessageKey, null);
     }
 
-    /*
+    /**
     次に挿入するメッセージのIDを取得.
      */
     private int getNextInputId() {

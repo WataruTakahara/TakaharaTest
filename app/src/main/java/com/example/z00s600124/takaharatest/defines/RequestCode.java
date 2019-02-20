@@ -1,6 +1,6 @@
 package com.example.z00s600124.takaharatest.defines;
 
-/*
+/**
 画面遷移のリクエストコードを定義.
  */
 public enum RequestCode {
