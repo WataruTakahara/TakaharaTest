@@ -30,10 +30,10 @@ public class MessagePreferenceIO {
      */
     public MessagePreferenceIO(Context activeContext) {
 
-        fileName = activeApplication.getResources().getString(R.string.prefer_message_list_file_name);
-        messageBaseKey = activeApplication.getResources().getString(R.string.prefer_message_key_name);
-        messageNextIdKey = activeApplication.getResources().getString(R.string.prefer_message_key_next_id);
-        messagePrefer = activeApplication.getSharedPreferences(fileName, Application.MODE_PRIVATE);
+        fileName = activeContext.getResources().getString(R.string.prefer_message_list_file_name);
+        messageBaseKey = activeContext.getResources().getString(R.string.prefer_message_key_name);
+        messageNextIdKey = activeContext.getResources().getString(R.string.prefer_message_key_next_id);
+        messagePrefer = activeContext.getSharedPreferences(fileName, Application.MODE_PRIVATE);
     }
 
     /**
