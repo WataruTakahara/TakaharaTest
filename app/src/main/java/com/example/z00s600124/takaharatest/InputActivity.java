@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.z00s600124.takaharatest.manager.MessagePreferenceManager;
+import com.example.z00s600124.takaharatest.defines.IntentExtraKeys;
+import com.example.z00s600124.takaharatest.manager.MessagePreferenceIO;
 
 /**
 ユーザがテキストボックスに文字を入力し、ボタンの押下でDisplayMessageListActivityに値を送信する.
@@ -31,15 +32,17 @@ public class InputActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 if (inputBox.getText() != null) {
                     String sendStr = inputBox.getText().toString();
+
                     //入力文字をプリファレンスに保存
+                    new MessagePreferenceIO(getApplicationContext())
+                            .addMessage(sendStr);
 
-                    MessagePreferenceManager mpManager = new MessagePreferenceManager(getApplication());
-                    mpManager.addMessage(sendStr);
-
-                    intent.putExtra(DisplayMessageListActivity.KEY_INPUT_VALUE, sendStr);
+                    intent.putExtra(IntentExtraKeys.INPUT_VALUE.getKeyName(), sendStr);
+                    setResult(RESULT_OK, intent);
+                } else {
+                    setResult(RESULT_CANCELED, intent);
                 }
 
-                setResult(RESULT_OK, intent);
                 finish();
             }
         });

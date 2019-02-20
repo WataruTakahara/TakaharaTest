@@ -27,8 +27,6 @@ import java.util.ArrayList;
  * 起動時にこの画面が最初に呼び出される.
  */
 public class DisplayMessageListActivity extends AppCompatActivity {
-    public static final String KEY_INPUT_VALUE = IntentExtraKeys.INPUT_VALUE.getKeyName();
-    private int requestCodeFromInputActivity = RequestCode.MessageListToInput.getInt();
     private LinearLayout listLayout;
 
     @Override
@@ -60,7 +58,7 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void initMessageForPreference() {
 
-        MessagePreferenceManager mpManager = new MessagePreferenceManager(getApplication());
+        MessagePreferenceIO mpManager = new MessagePreferenceIO(getApplicationContext());
         ArrayList<String> allMessages = mpManager.getAllMessages();
 
         //画面からメッセージを全て消去し、改めてメッセージを最初から追加していく
@@ -100,22 +98,23 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      * 消去してよいかのダイアログを表示.
      */
     private void confirmDeleteAllMessageList() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(DisplayMessageListActivity.this);
-        builder.setTitle(R.string.dialog_delete_all_title);
-        builder.setMessage(R.string.dialog_delete_all_text);
-        builder.setPositiveButton(R.string.dialog_delete_all_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                deleteAllMessageListDialogSelectedOk();
-            }
-        });
-        builder.setNegativeButton(R.string.dialog_delete_all_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //キャンセルの場合、何もしない
-            }
-        });
-        builder.create().show();
+        //Builderパターンに変更
+        new AlertDialog.Builder(DisplayMessageListActivity.this)
+                .setTitle(R.string.dialog_delete_all_title)
+                .setMessage(R.string.dialog_delete_all_text)
+                .setPositiveButton(R.string.dialog_delete_all_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteAllMessageListDialogSelectedOk();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_delete_all_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //キャンセルの場合、何もしない
+                    }
+                })
+                .create().show();
     }
 
     /**
@@ -124,7 +123,7 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void deleteAllMessageListDialogSelectedOk() {
         deleteAllMessageListFromLayout();
-        MessagePreferenceManager mpManager = new MessagePreferenceManager(getApplication());
+        MessagePreferenceIO mpManager = new MessagePreferenceIO(getApplicationContext());
         mpManager.deleteAllMessages();
 
         Toast toast = Toast.makeText(DisplayMessageListActivity.this, R.string.toast_delete_all, Toast.LENGTH_LONG);
@@ -144,9 +143,11 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == requestCodeFromInputActivity) {
-            textActivityResult(requestCode, resultCode, intent);
 
+        //入力画面で「入力」ボタンが押されてメッセージ一覧画面に戻ってきたとき
+        if (requestCode == RequestCode.MessageListToInput.getInt() && resultCode == RESULT_OK && intent != null) {
+            String inputValue = intent.getStringExtra(IntentExtraKeys.INPUT_VALUE.getKeyName());
+            addMessageToLayout(inputValue);
         }
         Log.d("DisplayMessageListActivity", "onActivityResult");
 
@@ -158,26 +159,19 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void startInputActivity() {
         Intent intent = new Intent(DisplayMessageListActivity.this, InputActivity.class);
-        int requestCode = requestCodeFromInputActivity;
-        startActivityForResult(intent, requestCode);
+        startActivityForResult(intent, RequestCode.MessageListToInput.getInt());
     }
 
 
-        //入力画面で正常に「入力」ボタンが押された
-        if (resultCode == RESULT_OK) {
-            String inputValue = intent.getStringExtra(DisplayMessageListActivity.KEY_INPUT_VALUE);
-            //入力されたメッセージが空の場合、何もしない
-            if (inputValue.length() == 0) {
-                return;
-            }
-            addMessageToLayout(inputValue);
-        }
-    }
-
-    /*
-    メッセージをレイアウトに追加して表示する
+    /**
+     * メッセージをレイアウトに追加して表示する
+     *
+     * @param message
      */
     private void addMessageToLayout(String message) {
+        if(!allowAddMessage(message)){
+            return;
+        }
         TextView textView = new TextView(this);
         //textView.setTextSize(getResources().getDimension( R.dimen.textSize_list ));//これだと文字が大きくなる（ユーザ設定が反映されるため）
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.textSize_list));
@@ -192,9 +186,22 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         textView.setText(message);
         listLayout.addView(textView);
     }
-/*
-勉強用にすべてのアクティビティライフライクルの各要素でログを出力する
- */
+
+    /**
+     * メッセージ一覧画面に追加できる場合、trueを返す
+     * @param message
+     * @return
+     */
+    private boolean allowAddMessage(String message){
+        //入力されたメッセージが空の場合、許可しない
+        if (message.length() == 0) {
+            return false;
+        }
+        return true;
+    }
+    /*
+    勉強用にすべてのアクティビティライフライクルの各要素でログを出力する
+    */
 
     @Override
     protected void onStart() {
