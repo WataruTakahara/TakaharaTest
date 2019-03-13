@@ -15,7 +15,6 @@
         android:theme="?attr/actionBarTheme"
         app:title="@string/app_name" />
 
-    <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/display_input_activity"
