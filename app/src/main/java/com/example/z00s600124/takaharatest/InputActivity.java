@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.z00s600124.takaharatest.defines.IntentExtraKeys;
-import com.example.z00s600124.takaharatest.manager.MessagePreferenceIO;
+import com.example.z00s600124.takaharatest.manager.MessageGsonIO;
 
 /**
 ユーザがテキストボックスに文字を入力し、ボタンの押下でDisplayMessageListActivityに値を送信する.
@@ -34,7 +34,7 @@ public class InputActivity extends AppCompatActivity {
                     String sendStr = inputBox.getText().toString();
 
                     //入力文字をプリファレンスに保存
-                    new MessagePreferenceIO(getApplicationContext())
+                    new MessageGsonIO(getApplicationContext())
                             .addMessage(sendStr);
 
                     intent.putExtra(IntentExtraKeys.INPUT_VALUE.getKeyName(), sendStr);

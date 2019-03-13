@@ -18,7 +18,7 @@ import java.util.ArrayList;
     <string name="message1">いいい</string>
 
  */
-public class MessagePreferenceIO {
+public class MessagePreferenceIO extends MessageIO{
     private String fileName;
     private String messageBaseKey;
     private String messageNextIdKey;
@@ -29,7 +29,7 @@ public class MessagePreferenceIO {
          @param activeContext 実行元となるContextクラス.通常はgetApplicationContext()を用いる
      */
     public MessagePreferenceIO(Context activeContext) {
-
+        super();
         fileName = activeContext.getResources().getString(R.string.prefer_message_list_file_name);
         messageBaseKey = activeContext.getResources().getString(R.string.prefer_message_key_name);
         messageNextIdKey = activeContext.getResources().getString(R.string.prefer_message_key_next_id);
@@ -39,6 +39,7 @@ public class MessagePreferenceIO {
     /**
    引数で渡された文字列をプリファレンスに追記する
     */
+    @Override
     public void addMessage(String message) {
         //プリファレンスに保存されたメッセージの要素数を取得してユニークなキーを生成（message0 , message1 ...)
         int messageCount = getNextInputId();
@@ -56,6 +57,7 @@ public class MessagePreferenceIO {
     全メッセージを取得.
     配列には古いものから順に挿入されている.
      */
+    @Override
     public ArrayList<String> getAllMessages() {
         ArrayList<String> allMessages = new ArrayList<>();
 
@@ -76,6 +78,7 @@ public class MessagePreferenceIO {
     各メッセージおよび要素数の項目を削除する
 
      */
+    @Override
     public void deleteAllMessages() {
         //メッセージの要素数を取得
         int nextInputNum = getNextInputId();
@@ -87,7 +90,6 @@ public class MessagePreferenceIO {
             messageEditor.remove(oneMessageKey);
         }
         messageEditor.apply();
-
     }
 
     /**

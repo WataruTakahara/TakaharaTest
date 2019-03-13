@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.z00s600124.takaharatest.defines.IntentExtraKeys;
 import com.example.z00s600124.takaharatest.defines.RequestCode;
-import com.example.z00s600124.takaharatest.manager.MessagePreferenceIO;
+import com.example.z00s600124.takaharatest.manager.MessageGsonIO;
 import com.example.z00s600124.takaharatest.view.DisplayMessageTextView;
 
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void initMessageForPreference() {
 
-        MessagePreferenceIO mpManager = new MessagePreferenceIO(getApplicationContext());
-        ArrayList<String> allMessages = mpManager.getAllMessages();
+        MessageGsonIO io = new MessageGsonIO(getApplicationContext());
+        ArrayList<String> allMessages = io.getAllMessages();
 
         //画面からメッセージを全て消去し、改めてメッセージを最初から追加していく
         deleteAllMessageListFromLayout();
@@ -124,8 +124,8 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void deleteAllMessageListDialogSelectedOk() {
         deleteAllMessageListFromLayout();
-        MessagePreferenceIO mpManager = new MessagePreferenceIO(getApplicationContext());
-        mpManager.deleteAllMessages();
+        MessageGsonIO io = new MessageGsonIO(getApplicationContext());
+        io.deleteAllMessages();
 
         Toast toast = Toast.makeText(DisplayMessageListActivity.this, R.string.toast_delete_all, Toast.LENGTH_LONG);
         toast.show();
