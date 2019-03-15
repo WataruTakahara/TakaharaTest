@@ -1,4 +1,4 @@
-package com.example.z00s600124.takaharatest.manager;
+package com.example.z00s600124.takaharatest.IO;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import com.example.z00s600124.takaharatest.R;
 
 import java.util.ArrayList;
+
+/**
+ *
+ * メッセージが画像対応となったため、このクラスは使わなくなった。
+ * 本来は消すべきだが、これは勉強用なので残しておく
+ */
 
 /**
 メッセージをプリファレンスに保存・読み込み・削除することを管理するクラス
@@ -18,7 +24,7 @@ import java.util.ArrayList;
     <string name="message1">いいい</string>
 
  */
-public class MessagePreferenceIO extends MessageIO{
+public class MessagePreferenceIO extends MessageIO<String>{
     private String fileName;
     private String messageBaseKey;
     private String messageNextIdKey;

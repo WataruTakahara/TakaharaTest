@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.example.z00s600124.takaharatest.data.Message;
 import com.example.z00s600124.takaharatest.defines.IntentExtraKeys;
 import com.example.z00s600124.takaharatest.defines.RequestCode;
-import com.example.z00s600124.takaharatest.manager.MessageGsonIO;
+import com.example.z00s600124.takaharatest.IO.MessageGsonIO;
 import com.example.z00s600124.takaharatest.view.DisplayMessageTextView;
 
 import java.util.ArrayList;
@@ -60,13 +59,13 @@ public class DisplayMessageListActivity extends AppCompatActivity {
     private void initMessageForPreference() {
 
         MessageGsonIO io = new MessageGsonIO(getApplicationContext());
-        ArrayList<String> allMessages = io.getAllMessages();
+        ArrayList<Message> allMessages = io.getAllMessages();
 
         //画面からメッセージを全て消去し、改めてメッセージを最初から追加していく
         deleteAllMessageListFromLayout();
 
-        for (String oneMessage : allMessages) {
-            addMessageToLayout(oneMessage);
+        for (Message oneMessage : allMessages) {
+            addMessageToLayout(oneMessage.getText());
         }
     }
 
@@ -146,7 +145,7 @@ public class DisplayMessageListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         //入力画面で「入力」ボタンが押されてメッセージ一覧画面に戻ってきたとき
-        if (requestCode == RequestCode.MessageListToInput.getInt() && resultCode == RESULT_OK && intent != null) {
+        if (requestCode == RequestCode.FromInput.getInt() && resultCode == RESULT_OK && intent != null) {
             String inputValue = intent.getStringExtra(IntentExtraKeys.INPUT_VALUE.getKeyName());
             addMessageToLayout(inputValue);
         }
@@ -160,7 +159,7 @@ public class DisplayMessageListActivity extends AppCompatActivity {
      */
     private void startInputActivity() {
         Intent intent = new Intent(DisplayMessageListActivity.this, InputActivity.class);
-        startActivityForResult(intent, RequestCode.MessageListToInput.getInt());
+        startActivityForResult(intent, RequestCode.FromInput.getInt());
     }
 
 

@@ -11,6 +11,8 @@
     <!-- メッセージ入力画面 -->
     <string name="please_input_here">Please put the message</string>
     <string name="input_message_button">OK</string>
+    <string name="select_image_button">Choose Image</string>
+
     <!-- メッセージ一覧画面-->
     <string name="display_below">Messages are displayed below</string>
     <!-- プリファレンス-->

@@ -4,7 +4,8 @@ package com.example.z00s600124.takaharatest.defines;
 画面遷移のリクエストコードを定義.
  */
 public enum RequestCode {
-    MessageListToInput(1000),
+    FromInput(1000),
+    FromGallery(2000)
     ;
 
     private final int id;
